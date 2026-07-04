@@ -1,0 +1,1865 @@
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Chic Chien — Toilettage de luxe</title>
+<style>
+  @font-face {
+    font-family: 'Larianti';
+    src: url('fonts/larianti.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'RoomThin';
+    /* src: url('fonts/Room Thin.ttf') format('truetype'); */
+    src: url('fonts/Room Thin.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'andrea';
+    src: url('fonts/andrea-typed.bold-demo.otf') format('opentype');
+  }
+
+  @media (max-width: 900px) {
+
+
+    header {
+      grid-template-rows: auto auto;
+    }
+    .hero-media {
+      order: 2;
+    }
+    .hero-brand {
+      order: 1;
+    }
+  }
+
+/* --cream: #7f643b; pretty good??*/
+
+  /* ── LIGHT THEME (default) ── */
+  :root,
+  [data-theme="light"] {
+    --cream: #f7f3ed;
+    --bone: #ede7db;
+    --brown: #4a3728;
+    --caramel: #b07d4a;
+    --gold: #c9a96e;
+    --dark: #1e1410;
+    --text: #3a2e24;
+    --muted: #7a6a5a;
+    --white: #ffffff;
+
+    /* section backgrounds */
+    --bg-main: #f7f3ed;
+    --bg-card: #ffffff;
+    --bg-card-border: rgba(74,55,40,0.08);
+    --bg-service-hover-shadow: rgba(74,55,40,0.1);
+    --text-primary: #3a2e24;
+    --text-muted: #7a6a5a;
+    --text-eyebrow: #b07d4a;
+    --text-title: #4a3728;
+    --nav-bg: rgba(247,243,237,0.85);
+    --nav-border: rgba(74,55,40,0.1);
+    --nav-link: #7a6a5a;
+    --nav-link-hover: #4a3728;
+    --ph-bar: rgba(74,55,40,0.09);
+    --divider: #c9a96e;
+    --toggle-bg: rgba(74,55,40,0.12);
+    --toggle-knob: #4a3728;
+    --toggle-icon-light: 1;
+    --toggle-icon-dark: 0;
+  }
+
+  /* ── DARK THEME ── */
+  [data-theme="dark"] {
+    --cream: #f7f3ed;
+    --bone: #ede7db;
+    --brown: #ede7db;
+    --caramel: #c9a96e;
+    --gold: #c9a96e;
+    --dark: #120c06;
+    --text: #ede7db;
+    --muted: #9a8c7a;
+    --white: #1e1410;
+
+    --bg-main: #201a13;
+    --bg-card: #2a201d;
+    --bg-card-border: rgba(201,169,110,0.1);
+    --bg-service-hover-shadow: rgba(0,0,0,0.4);
+    --text-primary: #ede7db;
+    --text-muted: #9a8c7a;
+    --text-eyebrow: #c9a96e;
+    --text-title: #f7f3ed;
+    --nav-bg: rgba(18,12,6,0.94);
+    --nav-border: rgba(201,169,110,0.12);
+    --nav-link: #b0a090;
+    --nav-link-hover: #f7f3ed;
+    --ph-bar: rgba(201,169,110,0.1);
+    --divider: #c9a96e;
+    --toggle-bg: rgba(201,169,110,0.12);
+    --toggle-knob: #c9a96e;
+  }
+
+[data-theme="dark"] .nav-logo { color: #f7f3ed; }
+[data-theme="dark"] .toggle-knob { background: #c9a96e; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'RoomThin', sans-serif;
+    background: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── ANIMATED BLOB BACKGROUND ── */
+  .blob-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .brand-blob {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+  .brand-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .blob-bg svg {
+    position: absolute;
+    width: 130%;
+    left: -15%;
+    top: -10%;
+    height: 120%;
+  }
+  @keyframes blobMorph1 {
+    0%,100% { d: path("M 100,300 C 150,100 350,0 500,100 C 650,200 700,350 600,500 C 500,650 250,680 150,550 C 50,420 50,500 100,300 Z"); }
+    33%     { d: path("M 120,280 C 200,80  380,20  520,130 C 660,240 680,400 560,530 C 440,660 200,660 110,520 C 20,380  40,480 120,280 Z"); }
+    66%     { d: path("M 80,320 C 120,120 320,30 490,120 C 660,210 720,380 590,510 C 460,640 220,700 130,560 C 40,420 40,520 80,320 Z"); }
+  }
+  @keyframes blobMorph2 {
+    0%,100% { d: path("M 600,200 C 750,100 900,200 880,400 C 860,600 700,700 550,620 C 400,540 380,380 450,280 C 520,180 450,300 600,200 Z"); }
+    33%     { d: path("M 580,180 C 740,60  920,180 890,400 C 860,620 680,720 530,630 C 380,540 370,360 450,260 C 530,160 420,300 580,180 Z"); }
+    66%     { d: path("M 620,220 C 760,120 910,240 870,430 C 830,620 660,690 510,610 C 360,530 350,360 440,270 C 530,180 480,320 620,220 Z"); }
+  }
+  .blob1 {
+    fill: rgba(201,169,110,0.11);
+    animation: blobMorph1 18s ease-in-out infinite;
+  }
+  .blob2 {
+    fill: rgba(176,125,74,0.08);
+    animation: blobMorph2 22s ease-in-out infinite;
+  }
+  @supports not (d: path("")) {
+    .blob1, .blob2 { display: none; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--nav-border);
+    transition: background 0.4s ease, border-color 0.4s ease;
+  }
+  .nav-logo {
+    font-family: 'larianti', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--brown);
+    letter-spacing: 0.02em;
+    transition: color 0.4s ease;
+  }
+  [data-theme="dark"] .nav-logo { color: #1e1410; }
+  .nav-logo em { font-style: italic; color: var(--caramel); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nav-link);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--nav-link-hover); }
+
+  /* ── DARK MODE TOGGLE ── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    background: var(--toggle-bg);
+    border: 1px solid rgba(74,55,40,0.15);
+    border-radius: 999px;
+    padding: 0.28rem 0.6rem 0.28rem 0.5rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .theme-toggle {
+    background: rgba(30,20,16,0.18);
+    border-color: rgba(30,20,16,0.2);
+  }
+  .theme-toggle:hover { opacity: 0.8; }
+  .toggle-track {
+    width: 32px;
+    height: 17px;
+    background: rgba(74,55,40,0.2);
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .toggle-track { background: rgba(30,20,16,0.35); }
+  .toggle-knob {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 13px; height: 13px;
+    border-radius: 50%;
+    background: #4a3728;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease;
+  }
+  [data-theme="dark"] .toggle-knob {
+    transform: translateX(15px);
+    background: #1e1410;
+  }
+  .toggle-label {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--nav-link);
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+  .toggle-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+  }
+  .icon-sun { display: block; }
+  .icon-moon { display: none; }
+  [data-theme="dark"] .icon-sun { display: none; }
+  [data-theme="dark"] .icon-moon { display: block; }
+
+  /* ── HERO — SPLIT ── */
+  header {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.56fr 1fr;
+    padding-top: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-media {
+    position: relative;
+    background: var(--dark);
+    display: grid;
+    overflow: hidden;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+  }
+  .hero-media::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 60% 30%, rgba(176,125,74,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.1) 0%, transparent 50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .media-main {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    position: relative;
+    background: linear-gradient(160deg, #2a1b10 0%, #1a0e08 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.9rem;
+    border-bottom: 2px solid rgba(201,169,110,0.12);
+    z-index: 1;
+  }
+  .media-main .ph-icon {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(201,169,110,0.1);
+    border: 1.5px dashed rgba(201,169,110,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem;
+  }
+  .media-main .ph-label {
+    font-family: 'andrea', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(201,169,110,0.4);
+    letter-spacing: 0.04em;
+  }
+  .media-main .ph-sub {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(201,169,110,0.2);
+  }
+  .media-badge {
+    position: absolute;
+    top: 1.2rem; left: 1.2rem;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 2px;
+    padding: 0.4rem 0.9rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    z-index: 2;
+  }
+
+  .hero-brand {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 3.5rem;
+    position: relative;
+    gap: 0;
+    z-index: 5;
+  }
+  .hero-brand::before { display: none; }
+
+  /* Hero SVG divider — adapts in dark mode */
+  .hero-divider-svg path {
+    transition: fill 0.4s ease;
+  }
+  [data-theme="dark"] .hero-divider-svg path {
+    fill: var(--bg-main);
+  }
+
+  .brand-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 360px;
+    gap: 2rem;
+  }
+  .brand-tagline {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 260px;
+    transition: color 0.4s ease;
+    margin-top: -20px;
+  }
+  .btn-resa-hero {
+    display: inline-block;
+    background: var(--brown);
+    color: var(--cream);
+    padding: 1rem 2.4rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    border: 1px solid var(--brown);
+    transition: all 0.28s ease;
+    width: 100%;
+    text-align: center;
+  }
+  .btn-resa-hero:hover { background: transparent; color: var(--brown); }
+
+#reservezBtn {
+  display: inline-block;
+  transform-origin: center;
+  margin-top: -35px;
+
+}
+
+#reservezBtn:hover {
+  animation: reservezWobble 3s ease-in-out infinite;
+}
+
+#reservezBtn:hover {
+  animation: reservezWobbleHover 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes reservezWobble {
+  0%,100% { transform: rotate(-2deg) scale(1);    }
+  50%      { transform: rotate(2deg)  scale(1.04); }
+}
+
+@keyframes reservezWobbleHover {
+  to { transform: scale(1.12) rotate(-2deg); }
+}
+  /* ── SHARED ── */
+  section { padding: 6rem 4rem; position: relative; }
+  .s-eye {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-eyebrow);
+    margin-bottom: 0.8rem;
+    transition: color 0.4s ease;
+  }
+  .s-title {
+    font-family: 'andrea', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--text-title);
+    transition: color 0.4s ease;
+  }
+  .s-title em { font-style: italic; color: var(--text-eyebrow); }
+  .divider {
+    width: 48px; height: 2px;
+    background: var(--divider);
+    margin: 1.2rem 0;
+    transition: background 0.4s ease;
+  }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-header .divider { margin: 1.2rem auto; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .ph-bar { background: var(--ph-bar); border-radius: 3px; height: 14px; transition: background 0.4s ease; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--bg-main); overflow: hidden; transition: background 0.4s ease; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .service-card {
+    /* background: var(--bg-card); */
+    /* border: 1px solid var(--bg-card-border); */
+    border-radius: 4px;
+    padding: 2.5rem 1.8rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--divider);
+    transform: scaleX(0);
+    transition: transform 0.3s ease, background 0.4s ease;
+  }
+  .service-card:hover {
+    box-shadow: 0 12px 40px var(--bg-service-hover-shadow);
+    transform: translateY(-4px);
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+  .service-name {
+    font-family: 'andrea', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text-title);
+    margin-bottom: 0.8rem;
+    transition: color 0.4s ease;
+  }
+  .service-card .ph-bar { margin-bottom: 0.4rem; }
+  .service-card .ph-bar:last-child { width: 70%; margin: 0 auto; }
+
+  .media-dots-bar {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.3rem 0 0.3rem 10%;
+    /* background: var(--bg-main); */
+    margin-top: -0.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+
+
+  .media-dots { display: flex; gap: 0.6rem; align-items: center; }
+  .media-dot-icon {
+    width: 18px; height: 18px;
+    object-fit: contain;
+    opacity: 0.25;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .media-dot-icon.active {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+
+
+  /* ── BEFORE / AFTER ── */
+  #avant-apres {
+    background: var(--bg-main);
+    overflow: hidden;
+    padding-top: 0;
+    transition: background 0.4s ease;
+  }
+  .ba-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .ba-track-wrap {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .ba-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+  .ba-slide {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .ba-card {
+    position: relative;
+    aspect-ratio: 3/4;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: crosshair;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .ba-before, .ba-after {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: opacity 0.35s ease;
+  }
+  .ba-before {
+    background: linear-gradient(160deg, #d4c4b0 0%, #c8b49a 100%);
+    opacity: 1; z-index: 1;
+  }
+  .ba-after {
+    background: linear-gradient(160deg, #2a1b10 0%, #1a0e08 100%);
+    opacity: 0; z-index: 2;
+  }
+  .ba-card:hover .ba-before,
+  .ba-card.touching .ba-before { opacity: 0; }
+  .ba-card:hover .ba-after,
+  .ba-card.touching .ba-after { opacity: 1; }
+  .ba-label {
+    position: absolute;
+    top: 0.9rem; left: 0.9rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    z-index: 3;
+    font-weight: 500;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .ba-label-before { background: rgba(237,231,219,0.9); color: var(--brown); opacity: 1; }
+  .ba-label-after  { background: rgba(201,169,110,0.9); color: var(--dark); opacity: 0; }
+  .ba-card:hover .ba-label-before,
+  .ba-card.touching .ba-label-before { opacity: 0; }
+  .ba-card:hover .ba-label-after,
+  .ba-card.touching .ba-label-after { opacity: 1; }
+  .ba-ph-icon { font-size: 2.5rem; opacity: 0.4; }
+  .ba-ph-text {
+    font-family: 'andrea', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .ba-after .ba-ph-icon { opacity: 0.35; }
+  .ba-after .ba-ph-text { color: rgba(201,169,110,0.5); }
+  .ba-hint {
+    position: absolute;
+    bottom: 0.9rem; left: 0; right: 0;
+    text-align: center;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(74,55,40,0.35);
+    text-transform: uppercase;
+    z-index: 3;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .ba-card:hover .ba-hint,
+  .ba-card.touching .ba-hint { opacity: 0; }
+  .ba-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .ba-arrow {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid rgba(74,55,40,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-title);
+  }
+  .ba-arrow:hover { background: var(--text-title); color: var(--bg-main); border-color: var(--text-title); }
+  .ba-arrow:disabled { opacity: 0.3; cursor: default; }
+  .ba-dots { display: flex; gap: 0.5rem; }
+  .ba-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(74,55,40,0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ba-dot.active { background: var(--text-eyebrow); transform: scale(1.3); }
+
+  /* ── AVIS GOOGLE ── */
+  #avis {
+    background: var(--bg-main);
+    overflow: hidden;
+    padding-top: 0;
+    transition: background 0.4s ease;
+  }
+  .avis-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .google-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+    margin-bottom: 2rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    transition: background 0.4s ease;
+  }
+  .google-g {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .avis-overall { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .avis-score {
+    font-family: 'andrea', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--text-title);
+    line-height: 1;
+    transition: color 0.4s ease;
+  }
+  .stars { color: #FBBC05; font-size: 1.1rem; letter-spacing: 0.05em; }
+  .avis-count { font-family: 'RoomThin', sans-serif; font-size: 0.75rem; color: var(--text-muted); transition: color 0.4s ease; }
+  .avis-track-wrap { overflow: hidden; }
+  .avis-track {
+    display: flex;
+    gap: 1.2rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .avis-card {
+    min-width: calc(33.333% - 0.8rem);
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    border-radius: 6px;
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 0;
+    transition: background 0.4s ease, border-color 0.4s ease;
+  }
+  .avis-top { display: flex; align-items: center; gap: 0.9rem; }
+  .avis-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    color: var(--white);
+  }
+  .avis-meta { flex: 1; min-width: 0; }
+  .avis-name {
+    font-family: 'RoomThin', sans-serif;
+    font-weight: 500;
+    font-size: 0.88rem;
+    color: var(--text-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.4s ease;
+  }
+  .avis-date { font-family: 'RoomThin', sans-serif; font-size: 0.72rem; color: var(--text-muted); }
+  .avis-stars { font-size: 0.85rem; color: #FBBC05; }
+  .avis-text-ph { display: flex; flex-direction: column; gap: 0.45rem; flex: 1; }
+  .avis-ph-bar { background: var(--ph-bar); border-radius: 3px; height: 12px; transition: background 0.4s ease; }
+  .avis-google-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4285F4, #34A853);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: white;
+    align-self: flex-end;
+    flex-shrink: 0;
+  }
+  .avis-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+  .avis-nav-btns { display: flex; gap: 0.6rem; }
+  .avis-arrow {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--bg-card-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-title);
+  }
+  .avis-arrow:hover { background: var(--text-title); color: var(--bg-main); }
+  .btn-google {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--bg-card-border);
+    color: var(--text-title);
+    padding: 0.6rem 1.3rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-google:hover { background: var(--text-title); color: var(--bg-main); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--dark); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  .contact-info .s-title { color: var(--cream); }
+  .contact-info .s-eye { color: var(--gold); }
+  .contact-info .divider { background: var(--gold); }
+  /* In dark mode, keep contact section unchanged — it's already dark */
+  [data-theme="dark"] .contact-info .s-title { color: #f7f3ed; }
+  [data-theme="dark"] .contact-info .s-eye { color: #7c6d4f; }
+  [data-theme="dark"] .contact-info .divider { background: #c9a96e; }
+  .contact-items { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.6rem; }
+  .c-item { display: flex; gap: 1rem; align-items: flex-start; }
+  .c-icon {
+    width: 40px; height: 40px;
+    background: rgba(201,169,110,0.12);
+    border: 1px solid rgba(201,169,110,0.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .c-label {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c9a96e;
+    margin-bottom: 0.5rem;
+  }
+  .contact-right { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  /* ── NOTRE HISTOIRE ── */
+  #histoire { background: var(--bg-main); overflow: hidden; transition: background 0.4s ease; }
+  .histoire-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .histoire-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 2.5rem;
+  }
+  .histoire-text { display: flex; flex-direction: column; gap: 0.55rem; }
+  .histoire-text p {
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    line-height: 1.9;
+    transition: color 0.4s ease;
+  }
+
+  /* ── RÉSERVATION ── */
+  #reservation {
+    background: var(--brown);
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+  /* In dark mode the reservation section already uses --brown which is now near-black, keep it consistent */
+  [data-theme="dark"] #reservation {
+    background: #1e1410;
+  }
+  #reservation::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px,
+      transparent 1px, transparent 30px
+    );
+  }
+  .resa-content { position: relative; }
+  .resa-bow { font-size: 3rem; display: block; margin-bottom: 1rem; }
+  .resa-title {
+    font-family: 'andrea', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: #f7f3ed;
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+  .resa-title em { font-style: italic; color: #c9a96e; }
+  .resa-sub {
+    font-family: 'RoomThin', sans-serif;
+    color: rgba(247,243,237,0.5);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+
+  /* ── Reservation form inputs ── */
+  .form-input {
+    height: 50px;
+    width: 100%;
+    background: rgba(247,243,237,0.07);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 3px;
+    padding: 0 1rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.82rem;
+    color: #f7f3ed;
+    letter-spacing: 0.04em;
+    outline: none;
+    appearance: none;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: rgba(247,243,237,0.25); }
+  .form-input:focus        { border-color: rgba(201,169,110,0.55); }
+  .form-input.invalid      { border-color: rgba(220,80,80,0.7); animation: shake 0.35s ease; }
+  .form-input option       { background: #2a1b10; color: #f7f3ed; }
+
+  /* Date input icon tint */
+  .form-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(0.5); cursor: pointer; }
+
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '↓';
+    position: absolute;
+    right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(201,169,110,0.5);
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25%      { transform: translateX(-6px); }
+    75%      { transform: translateX(6px); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .resa-form {
+    max-width: 560px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+  .form-field-ph {
+    height: 50px;
+    background: rgba(247,243,237,0.07);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 3px;
+    display: flex; align-items: center;
+    padding: 0 1rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(247,243,237,0.25);
+    letter-spacing: 0.06em;
+    text-align: left;
+  }
+  .form-field-ph.full { grid-column: 1 / -1; }
+  .btn-resa {
+    grid-column: 1 / -1;
+    display: block;
+    background: #c9a96e;
+    color: #1e1410;
+    padding: 1.1rem 3rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 0.4rem;
+    width: 100%;
+  }
+  .btn-resa:hover { background: #f7f3ed; transform: translateY(-2px); }
+
+  footer {
+    background: var(--dark);
+    text-align: center;
+    padding: 2rem;
+    font-family: 'RoomThin', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(247,243,237,0.3);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+
+
+  
+    nav {padding: 0.7rem 1.2rem;}
+    .nav-logo {font-size: 1.1rem;}
+    .nav-links { display: none; }
+    /* Show toggle even on mobile */
+    .theme-toggle { display: flex; }
+    header { grid-template-columns: 1fr; grid-template-rows: 64vh auto; }
+    .hero-media {display: none; min-height: 55vh; }
+    .hero-brand {   padding: 4rem 2rem 1rem;}
+    section { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .ba-slide { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .ba-slide .ba-card:last-child { display: none; }
+    .avis-card { min-width: calc(50% - 0.6rem); }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .histoire-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .resa-form { grid-template-columns: 1fr; }
+    .form-field-ph.full { grid-column: 1; }
+    .btn-resa { grid-column: 1; }
+    .brand-tagline {
+      margin-top: -20px;
+    }
+  
+  .histoire-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .histoire-layout img {
+    width: min(340px, 80vw);
+    height: min(340px, 80vw);
+  }
+
+  }
+  @media (max-width: 560px) {
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .ba-slide { grid-template-columns: 1fr; }
+    .ba-slide .ba-card:nth-child(2),
+    .ba-slide .ba-card:last-child { display: none; }
+    .avis-card { min-width: calc(100% - 0rem); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Le Chic Chien</div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#avant-apres">Avant / Après</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#reservation">Réserver</a></li>
+    <li>
+      <button class="theme-toggle" id="themeToggle" aria-label="Basculer mode sombre">
+        <span class="toggle-icon icon-sun">☀️</span>
+        <span class="toggle-icon icon-moon">🌙</span>
+        <div class="toggle-track"><div class="toggle-knob"></div></div>
+      </button>
+    </li>
+  </ul>
+  <!-- Mobile toggle (visible when nav-links hidden) -->
+  <button class="theme-toggle" id="themeToggleMobile" aria-label="Basculer mode sombre" style="display:none;">
+    <span class="toggle-icon icon-sun">☀️</span>
+    <span class="toggle-icon icon-moon">🌙</span>
+    <div class="toggle-track"><div class="toggle-knob"></div></div>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<header>
+  <svg class="hero-divider-svg" style="position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;" viewBox="-20 0 150 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="heroDividerPath" d="M 100,-5 C -45,-5 65,8 68,28 C 71,48 58,60 61,72 C 64,88 70,96 -45,100 L 152,103 Z" fill="var(--cream)" opacity="1.0"/>
+    <!-- <path id="heroDividerPath" d="M 152,-5 C 120,-5 95,5 85,15 C 75,25 70,22 68,28 C 65,36 58,60 61,72 C 64,88 70,96 -45,100 L 152,100 Z" fill="var(--cream)" opacity="1.0"/> -->
+    <!-- <path id="heroDividerPath" d="M 100,-5 C -100,-16 59,8 46,28 C 32,48 58,60 61,72 C 64,88 70,96 -45,100 L 152,100 Z" fill="var(--cream)" opacity="1.0"/> -->
+  </svg>
+  <div class="hero-media">
+    <!-- <div class="media-badge">Toilettage canin de luxe</div> -->
+    <div class="media-main" id="mediaMain" style="grid-column:1/-1;grid-row:1/-1;"></div>
+    <!-- <div class="media-dots" id="mediaDots" style="position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.6rem;align-items:center;z-index:10;"></div> -->
+    <div class="media-dots" id="mediaDots" style="position:absolute;bottom:0.3rem;left:50%;transform:translateX(-50%);display:none;gap:0.6rem;align-items:center;z-index:10;"></div>
+  
+  </div>
+
+  <div class="hero-brand">
+    <div class="brand-inner">
+      <img src="logos_redone\herodog\CHIEN47.png" alt="Le Chic Chien" style="width:min(512px, 80vw);height:min(512px, 80vw);object-fit:contain;mix-blend-mode:multiply;">
+      <p class="brand-tagline">L'endroit par excellence pour faire une beauté à vos animaux de compagnie.</p>
+      <a href="#reservation" id="reservezBtn">
+        <img src="logos_redone/herodog/reservez2.png" alt="Réservez maintenant" style="width:340px;cursor:pointer;display:block;">
+      </a>
+    </div>
+  </div>
+</header>
+
+
+<!-- <div class="media-dots-bar">
+  <div class="media-dots" id="mediaDots"></div>
+</div> -->
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="s-eye">Ce que nous offrons</div>
+    <h2 class="s-title">Nos <em>Services</em></h2>
+    <div class="divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal" style="transition-delay:0s">
+      <span class="service-icon"><img src="logos_redone/herodog/paw.png" alt="Garde canine" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
+      <div class="service-name">Garde canine</div>
+      <!-- <div class="ph-bar"></div> -->
+      <!-- <div class="ph-bar" style="width:80%;margin:0.4rem auto 0;"></div> -->
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <span class="service-icon"><img src="logos_redone/herodog/brush1.png" alt="Nettoyage" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
+      <div class="service-name">Nettoyage</div>
+      <!-- <div class="ph-bar"></div> -->
+      <!-- <div class="ph-bar" style="width:80%;margin:0.4rem auto 0;"></div> -->
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <span class="service-icon"><img src="logos_redone/herodog/scis1.png" alt="Coupes" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
+      <div class="service-name">Coupes</div>
+      <!-- <div class="ph-bar"></div> -->
+      <!-- <div class="ph-bar" style="width:80%;margin:0.4rem auto 0;"></div> -->
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.3s">
+      <span class="service-icon"><img src="logos_redone/herodog/crown.png" alt="Soins spécifiques" style="width:2.2rem;height:2.2rem;object-fit:contain;"></span>
+      <div class="service-name">Soins spécifiques</div>
+      <!-- <div class="ph-bar"></div> -->
+      <!-- <div class="ph-bar" style="width:80%;margin:0.4rem auto 0;"></div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ── AVANT / APRÈS ── -->
+<section id="avant-apres">
+  <div class="ba-inner">
+    <div class="section-header reveal">
+      <div class="s-eye">Nos transformations</div>
+      <h2 class="s-title">Avant & <em>Après</em></h2>
+      <div class="divider"></div>
+      <p style="font-family:'RoomThin',sans-serif;font-size:0.82rem;color:var(--text-muted);margin-top:0.5rem;transition:color 0.4s ease;">Survolez ou touchez une image pour révéler la transformation</p>
+    </div>
+    <div class="ba-track-wrap reveal">
+      <div class="ba-track" id="baTrack">
+        <!-- Slide 1 -->
+        <div class="ba-slide">
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+              <div class="ba-before"><img src="avantap/av1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+              <div class="ba-after"><img src="avantap/ap1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+              <div class="ba-before"><img src="avantap/av2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+              <div class="ba-after"><img src="avantap/ap2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+              <div class="ba-before"><img src="avantap/av3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+              <div class="ba-after"><img src="avantap/ap3.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+          </div>
+        </div>
+        <!-- Slide 2 -->
+        <!-- <div class="ba-slide">
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><div class="ba-ph-icon">🐕</div><div class="ba-ph-text">Photo avant<br>Chien 4</div></div>
+            <div class="ba-after"><div class="ba-ph-icon">🌟</div><div class="ba-ph-text">Photo après<br>Chien 4</div></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><div class="ba-ph-icon">🐕</div><div class="ba-ph-text">Photo avant<br>Chien 5</div></div>
+            <div class="ba-after"><div class="ba-ph-icon">🌟</div><div class="ba-ph-text">Photo après<br>Chien 5</div></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><div class="ba-ph-icon">🐕</div><div class="ba-ph-text">Photo avant<br>Chien 6</div></div>
+            <div class="ba-after"><div class="ba-ph-icon">🌟</div><div class="ba-ph-text">Photo après<br>Chien 6</div></div>
+          </div>
+        </div> -->
+        <!-- Slide 3 -->
+        <!-- <div class="ba-slide">
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><div class="ba-ph-icon">🐩</div><div class="ba-ph-text">Photo avant<br>Chien 7</div></div>
+            <div class="ba-after"><div class="ba-ph-icon">🎀</div><div class="ba-ph-text">Photo après<br>Chien 7</div></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><div class="ba-ph-icon">🐩</div><div class="ba-ph-text">Photo avant<br>Chien 8</div></div>
+            <div class="ba-after"><div class="ba-ph-icon">🎀</div><div class="ba-ph-text">Photo après<br>Chien 8</div></div>
+          </div>
+          <div class="ba-card">
+            <div class="ba-label ba-label-before">Avant</div><div class="ba-label ba-label-after">Après</div>
+            <div class="ba-hint">✦ Survolez</div>
+            <div class="ba-before"><img src="avantap/av1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>
+            <div class="ba-after"><img src="avantap/ap1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></div>          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="ba-nav">
+      <button class="ba-arrow" id="baPrev" aria-label="Précédent">&#8592;</button>
+      <div class="ba-dots" id="baDots"></div>
+
+      <button class="ba-arrow" id="baNext" aria-label="Suivant">&#8594;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── AVIS GOOGLE ── -->
+<section id="avis">
+  <div class="avis-inner">
+    <div class="section-header reveal">
+      <div class="s-eye">Ce que disent nos clients</div>
+      <h2 class="s-title">Avis <em>Google</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;" class="reveal">
+      <div class="google-badge">
+        <div class="google-g">G</div>
+        Google Avis
+      </div>
+      <div>
+        <div class="avis-overall">
+          <span class="avis-score">5.0</span>
+          <span class="stars">★★★★★</span>
+        </div>
+        <div class="avis-count">Basé sur vos avis Google</div>
+      </div>
+    </div>
+    <div class="avis-track-wrap">
+      <div class="avis-track" id="avisTrack">
+        <div class="avis-card reveal">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#4285F4;">ML</div>
+            <div class="avis-meta"><div class="avis-name">Marie-Luce T.</div><div class="avis-date">Il y a 2 semaines</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:92%"></div>
+            <div class="avis-ph-bar" style="width:78%"></div><div class="avis-ph-bar" style="width:60%"></div>
+          </div>
+        </div>
+        <div class="avis-card reveal" style="transition-delay:0.1s">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#34A853;">JP</div>
+            <div class="avis-meta"><div class="avis-name">Jean-Philippe B.</div><div class="avis-date">Il y a 1 mois</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:85%"></div>
+            <div class="avis-ph-bar" style="width:70%"></div>
+          </div>
+        </div>
+        <div class="avis-card reveal" style="transition-delay:0.2s">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#FBBC05;color:#333;">SC</div>
+            <div class="avis-meta"><div class="avis-name">Sophie C.</div><div class="avis-date">Il y a 3 semaines</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:88%"></div>
+            <div class="avis-ph-bar" style="width:94%"></div><div class="avis-ph-bar" style="width:55%"></div>
+          </div>
+        </div>
+        <div class="avis-card reveal" style="transition-delay:0.1s">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#EA4335;">AG</div>
+            <div class="avis-meta"><div class="avis-name">Annie G.</div><div class="avis-date">Il y a 2 mois</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:76%"></div>
+            <div class="avis-ph-bar" style="width:88%"></div>
+          </div>
+        </div>
+        <div class="avis-card reveal" style="transition-delay:0.2s">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#b07d4a;">PL</div>
+            <div class="avis-meta"><div class="avis-name">Pierre-Luc M.</div><div class="avis-date">Il y a 5 semaines</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:91%"></div>
+            <div class="avis-ph-bar" style="width:66%"></div>
+          </div>
+        </div>
+        <div class="avis-card reveal" style="transition-delay:0.3s">
+          <div class="avis-top">
+            <div class="avis-avatar" style="background:#4a3728;">FR</div>
+            <div class="avis-meta"><div class="avis-name">Francine R.</div><div class="avis-date">Il y a 6 semaines</div></div>
+            <div class="avis-google-icon">G</div>
+          </div>
+          <div class="avis-stars">★★★★★</div>
+          <div class="avis-text-ph">
+            <div class="avis-ph-bar" style="width:100%"></div><div class="avis-ph-bar" style="width:80%"></div>
+            <div class="avis-ph-bar" style="width:72%"></div><div class="avis-ph-bar" style="width:50%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="avis-nav reveal">
+      <div class="avis-nav-btns">
+        <button class="avis-arrow" id="avisPrev" aria-label="Précédent">&#8592;</button>
+        <button class="avis-arrow" id="avisNext" aria-label="Suivant">&#8594;</button>
+      </div>
+      <a href="#" class="btn-google">
+        <div class="google-g" style="width:16px;height:16px;font-size:0.6rem;">G</div>
+        Voir tous les avis
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <div class="s-eye">Venez nous voir</div>
+      <h2 class="s-title">Contact &<br><em>Localisation</em></h2>
+      <div class="divider"></div>
+      <div class="contact-items">
+        <div class="c-item">
+          <div class="c-icon"><img src="logos_redone/herodog/clock.png" alt="Heures" style="width:22px;height:22px;object-fit:contain;"></div>
+          <div style="flex:1">
+            <div class="c-label">Heures d'ouverture</div>
+            <div style="font-family:'RoomThin',sans-serif;font-size:0.82rem;color:rgba(201,169,110,0.7);line-height:1.9;">
+              Lun – Ven &nbsp;8h – 16h<br>Sam – Dim &nbsp;Fermé
+            </div>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon"><img src="logos_redone/herodog/phone.png" alt="Téléphone" style="width:22px;height:22px;object-fit:contain;"></div>
+          <div style="flex:1">
+            <div class="c-label">Téléphone</div>
+            <a href="tel:+18193767571" style="font-family:'RoomThin',sans-serif;font-size:0.88rem;color:rgba(201,169,110,0.7);text-decoration:none;cursor:pointer;">+1 (819) 376-7571</a>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon"><img src="logos_redone/herodog/@.png" alt="Courriel" style="width:22px;height:22px;object-fit:contain;"></div>
+          <div style="flex:1">
+            <div class="c-label">Courriel</div>
+            <a href="mailto:lechicchientr@gmail.com" style="font-family:'RoomThin',sans-serif;font-size:0.85rem;color:rgba(201,169,110,0.7);text-decoration:none;">lechicchientr@gmail.com</a>
+          </div>
+        </div>
+        <div class="c-item">
+          <div class="c-icon"><img src="logos_redone/herodog/pin.png" alt="Adresse" style="width:22px;height:22px;object-fit:contain;"></div>
+          <div style="flex:1">
+            <div class="c-label">Adresse</div>
+            <div onclick="copyAddress()" style="font-family:'RoomThin',sans-serif;font-size:0.88rem;color:rgba(201,169,110,0.7);line-height:1.7;cursor:pointer;" title="Copier l'adresse">
+              800 Place Boland<br>Trois-Rivières, QC G8Z 4H2
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right reveal" style="transition-delay:0.15s">
+      <div style="border-radius:4px;overflow:hidden;border:1px solid rgba(201,169,110,0.15);">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2778.0!2d-72.5580!3d46.3490!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc954a0e6a7f3e1%3A0x0!2s800+Pl.+Boland%2C+Trois-Rivi%C3%A8res%2C+QC+G8Z+4H2!5e0!3m2!1sfr!2sca!4v1700000000000"
+          width="100%" height="280"
+          style="display:block;border:0;filter:sepia(30%) hue-rotate(340deg) brightness(0.85) contrast(1.1);"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+      <div id="panorama-wrap" style="position:relative;width:100%;height:340px;border-radius:4px;overflow:hidden;border:1px solid rgba(201,169,110,0.15);cursor:grab;background:#1a0e08;">
+        <canvas id="panoCanvas" style="width:100%;height:100%;display:block;"></canvas>
+        <div id="pano-hint" style="position:absolute;bottom:0.8rem;left:50%;transform:translateX(-25%);background:rgba(26,14,8,0.7);border:1px solid rgba(201,169,110,0.25);border-radius:2px;padding:0.3rem 0.9rem;font-family:'RoomThin',sans-serif;font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(201,169,110,0.7);pointer-events:none;white-space:nowrap;transition:opacity 0.4s;">
+          ↔ Glisser pour explorer
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NOTRE HISTOIRE ── -->
+<section id="histoire">
+  <div class="histoire-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="s-eye">Qui sommes-nous</div>
+      <h2 class="s-title">Notre <em>Histoire</em></h2>
+      <div class="divider" style="margin:1.2rem auto;"></div>
+    </div>
+    <div class="histoire-layout">
+      <div class="team-photo-ph reveal" style="transition-delay:0.1s;">
+        <img src="refs/histoire.jpg" alt="Le Chic Chien" style="width:512px;height:512px;object-fit:contain;mix-blend-mode:multiply;">
+      </div>
+      <div class="histoire-text reveal" style="transition-delay:0.2s;">
+        <p>Tout a commencé en 2022...</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RÉSERVATION ── -->
+<!-- ── RÉSERVATION ── -->
+<section id="reservation">
+  <div class="resa-content reveal">
+    <img src="logos_redone/herodog/papillon1.png" alt="" style="width:80px;height:80px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.85;">
+    <h2 class="resa-title">Prêt à gâter<br>votre <em>compagnon</em>&nbsp;?</h2>
+    <p class="resa-sub">Remplissez le formulaire — on s'occupe du reste.</p>
+
+    <form id="resaForm" novalidate style="max-width:560px;margin:0 auto;">
+
+      <!-- HONEYPOT -->
+      <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+        <input type="text" id="resa-website" name="website" autocomplete="off" tabindex="-1">
+      </div>
+
+      <div class="resa-form">
+        <input type="text"  id="resa-prenom"    name="prenom"    placeholder="Prénom"              autocomplete="given-name"  required class="form-input">
+        <input type="text"  id="resa-nom"        name="nom"        placeholder="Nom"                 autocomplete="family-name" required class="form-input">
+        <input type="tel"   id="resa-phone"      name="phone"      placeholder="Téléphone"           autocomplete="tel"                  class="form-input">
+        <input type="email" id="resa-email"      name="email"      placeholder="Courriel"            autocomplete="email"       required class="form-input">
+        <input type="text"  id="resa-chien"      name="chien"      placeholder="Nom &amp; race de votre chien"                          class="form-input full">
+        <div class="select-wrap full">
+          <select id="resa-service" name="service" required class="form-input">
+            <option value="" disabled selected>Service souhaité</option>
+            <option>Garde canine</option>
+            <option>Nettoyage</option>
+            <option>Coupes</option>
+            <option>Soins spécifiques</option>
+            <option>Autre / Renseignement général</option>
+          </select>
+        </div>
+        <input type="date"  id="resa-date"       name="date"       placeholder="Date préférée"                                          class="form-input full">
+
+        <button type="submit" class="btn-resa" id="resaSubmitBtn">
+          <span class="btn-resa-spinner" style="display:none;width:16px;height:16px;border:2px solid rgba(30,20,16,0.3);border-top-color:#1e1410;border-radius:50%;animation:spin 0.7s linear infinite;margin-right:0.5rem;"></span>
+          <span class="btn-resa-label">Confirmer le rendez-vous</span>
+        </button>
+      </div>
+
+      <div id="resaSuccess" style="display:none;margin-top:1.2rem;padding:1rem 1.4rem;background:rgba(201,169,110,0.12);border:1px solid rgba(201,169,110,0.35);border-radius:3px;font-family:'RoomThin',sans-serif;font-size:0.82rem;color:#c9a96e;letter-spacing:0.04em;">
+        ✦ &nbsp;Votre demande a bien été reçue. Nous vous confirmerons votre rendez-vous dans les 24 heures — merci !
+      </div>
+      <div id="resaError" style="display:none;margin-top:1.2rem;padding:1rem 1.4rem;background:rgba(180,60,60,0.1);border:1px solid rgba(180,60,60,0.3);border-radius:3px;font-family:'RoomThin',sans-serif;font-size:0.82rem;color:#e07070;letter-spacing:0.04em;">
+        Une erreur est survenue. Veuillez réessayer ou nous joindre directement par téléphone.
+      </div>
+
+    </form>
+  </div>
+</section>
+
+
+
+<footer>
+  © 2026 Le Chic Chien ·
+</footer>
+
+<script>
+/* ── THEME TOGGLE ── */
+(function() {
+  const root = document.documentElement;
+  const toggles = [
+    document.getElementById('themeToggle'),
+    document.getElementById('themeToggleMobile')
+  ];
+
+  // Show mobile toggle when nav-links are hidden
+  function syncMobileToggle() {
+    const mobile = document.getElementById('themeToggleMobile');
+    if (window.innerWidth <= 900) {
+      mobile.style.display = 'flex';
+    } else {
+      mobile.style.display = 'none';
+    }
+  }
+  window.addEventListener('resize', syncMobileToggle);
+  syncMobileToggle();
+
+  // Persist preference
+  const saved = localStorage.getItem('chic-chien-theme') || 'light';
+  root.setAttribute('data-theme', saved);
+
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('chic-chien-theme', next);
+    });
+  });
+})();
+
+
+
+
+function copyAddress() {
+  const text = '800 Place Boland, Trois-Rivières, QC G8Z 4H2';
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('Adresse copiée !'));
+  } else {
+    const el = document.createElement('textarea');
+    el.value = text;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('Adresse copiée !');
+  }
+}
+
+/* ── Reveal on scroll ── */
+const reveals = document.querySelectorAll('.reveal');
+const revObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+reveals.forEach(el => revObs.observe(el));
+
+/* ── Before/After touch on mobile ── */
+document.querySelectorAll('.ba-card').forEach(card => {
+  card.addEventListener('touchstart', () => card.classList.add('touching'), { passive: true });
+  card.addEventListener('touchend', () => card.classList.remove('touching'), { passive: true });
+});
+
+/* ── Before/After Carousel ── */
+(function() {
+  const track = document.getElementById('baTrack');
+  const slides = track.querySelectorAll('.ba-slide');
+  const dotsWrap = document.getElementById('baDots');
+  const prevBtn = document.getElementById('baPrev');
+  const nextBtn = document.getElementById('baNext');
+  let current = 0;
+  const total = slides.length;
+  for (let i = 0; i < total; i++) {
+      const d = document.createElement('img');
+      d.src = 'logos_redone/herodog/paw.png';
+      d.className = 'media-dot-icon' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Slide ' + (i+1));
+      d.style.cursor = 'pointer';
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+  }
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, total - 1));
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dotsWrap.querySelectorAll('.media-dot-icon').forEach((d, i) => d.classList.toggle('active', i === current));
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+  }
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  let startX = 0;
+  const wrap = document.querySelector('.ba-track-wrap');
+  wrap.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+  goTo(0);
+})();
+
+/* ── Google Avis Carousel ── */
+(function() {
+  const track = document.getElementById('avisTrack');
+  const cards = track.querySelectorAll('.avis-card');
+  const prevBtn = document.getElementById('avisPrev');
+  const nextBtn = document.getElementById('avisNext');
+  function getVisible() {
+    if (window.innerWidth <= 560) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+  let current = 0;
+  function goTo(n) {
+    const vis = getVisible();
+    const max = Math.max(0, cards.length - vis);
+    current = Math.max(0, Math.min(n, max));
+    const gapPx = 19.2;
+    const trackWidth = track.parentElement.offsetWidth;
+    const offset = current * (trackWidth / vis + gapPx / vis);
+    track.style.transform = 'translateX(-' + offset + 'px)';
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= max;
+  }
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+  let startX = 0;
+  track.parentElement.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  track.parentElement.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+  window.addEventListener('resize', () => goTo(current));
+  goTo(0);
+})();
+
+/* ── Hero media cycler ── */
+(function() {
+  const items = [
+    // { type: 'video', src: 'snack_golden.mp4', label: 'Vidéo principale', sub: 'MP4', icon: '🎬' },
+    // { type: 'video', src: null, label: 'Vidéo 1', sub: 'MP4 recommandé', icon: '🎬' },
+    { type: 'image', src: 'dogfolder/cutie1.jpg', label: 'Photo 1', sub: 'JPG', icon: '🖼️' },
+    { type: 'image', src: 'dogfolder/cutie2.jpg', label: 'Photo 1', sub: 'JPG', icon: '🖼️' },
+    { type: 'image', src: 'dogfolder/cutie3.jpg', label: 'Photo 1', sub: 'JPG', icon: '🖼️' },
+    
+  ];
+  const main = document.getElementById('mediaMain');
+  let current = 0;
+function render(i) {
+  const it = items[i];
+  main.innerHTML = it.src
+    ? (it.type === 'video'
+        ? `<video src="${it.src}" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"></video>`
+        : `<img src="${it.src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" alt="">`)
+    : `<div class="ph-icon">${it.icon}</div>
+       <div class="ph-label">${it.label}</div>
+       <div class="ph-sub">${it.sub}</div>`;
+  document.querySelectorAll('.media-dot-icon').forEach((d, idx) => {
+    d.classList.toggle('active', idx === i);
+  });
+}
+
+function buildDots() {
+  const wrap = document.getElementById('mediaDots');
+  wrap.innerHTML = items.map((_, i) =>
+    `<img class="media-dot-icon${i === 0 ? ' active' : ''}" src="logos_redone/herodog/paw.png" alt="">`
+  ).join('');
+}
+
+ 
+  function advance() {
+    current = (current + 1) % items.length;
+    render(current);
+  }
+  buildDots();
+  render(0);
+  setInterval(advance, 5000);
+})();
+
+/* ── 360 Panorama ── */
+(function() {
+  const wrap   = document.getElementById('panorama-wrap');
+  const canvas = document.getElementById('panoCanvas');
+  const hint   = document.getElementById('pano-hint');
+  const ctx    = canvas.getContext('2d');
+  const img    = new Image();
+  img.src      = 'Street View 3602.png';
+  let yaw = 0, dragging = false, lastX = 0, autoSpeed = 0.003;
+  let raf, hintTimeout;
+  function resize() {
+    canvas.width  = wrap.offsetWidth  * devicePixelRatio;
+    canvas.height = wrap.offsetHeight * devicePixelRatio;
+  }
+  function draw() {
+    if (!img.complete || !img.naturalWidth) { raf = requestAnimationFrame(draw); return; }
+    resize();
+    const W = canvas.width, H = canvas.height;
+    const iW = img.naturalWidth, iH = img.naturalHeight;
+    const fovRatio = W / H;
+    const stripW   = iH * fovRatio;
+    const srcX     = ((yaw % 1 + 1) % 1) * iW;
+    ctx.clearRect(0, 0, W, H);
+    const seg1W = Math.min(stripW, iW - srcX);
+    ctx.drawImage(img, srcX, 0, seg1W, iH, 0, 0, (seg1W / stripW) * W, H);
+    if (seg1W < stripW) {
+      const seg2W = stripW - seg1W;
+      ctx.drawImage(img, 0, 0, seg2W, iH, (seg1W / stripW) * W, 0, (seg2W / stripW) * W, H);
+    }
+    if (!dragging) yaw += autoSpeed / iW * stripW * 0.015;
+    raf = requestAnimationFrame(draw);
+  }
+  img.onload  = () => { resize(); draw(); };
+  img.onerror = () => { ctx.fillStyle = 'rgba(201,169,110,0.15)'; ctx.fillRect(0,0,canvas.width,canvas.height); };
+  function showHint() {
+    hint.style.opacity = '1';
+    clearTimeout(hintTimeout);
+    hintTimeout = setTimeout(() => hint.style.opacity = '0', 2200);
+  }
+  wrap.addEventListener('mousedown', e => { dragging = true; lastX = e.clientX; wrap.style.cursor = 'grabbing'; showHint(); });
+  window.addEventListener('mousemove', e => { if (!dragging) return; yaw -= (e.clientX - lastX) / (wrap.offsetWidth * 2.5); lastX = e.clientX; });
+  window.addEventListener('mouseup', () => { dragging = false; wrap.style.cursor = 'grab'; });
+  wrap.addEventListener('touchstart', e => { dragging = true; lastX = e.touches[0].clientX; showHint(); }, { passive: true });
+  wrap.addEventListener('touchmove', e => { if (!dragging) return; yaw -= (e.touches[0].clientX - lastX) / (wrap.offsetWidth * 2.5); lastX = e.touches[0].clientX; }, { passive: true });
+  wrap.addEventListener('touchend', () => { dragging = false; });
+  window.addEventListener('resize', resize);
+  showHint();
+})();
+
+
+/* ── Hero divider path morph ── */
+function morphDivider() {
+  const path = document.getElementById('heroDividerPath');
+  if (!path) return;
+
+  const unit_change = 10; // ← hard cap from base values
+
+  const base = {
+    a1x: 68, // anchor point 1 (end of first bezier segment)
+    a2x: 61, // anchor point 2 (end of second bezier segment)
+  };
+
+  const rand = (b) => b + (Math.random() - 0.5) * 2 * unit_change;
+  const clamp = (val, b) => Math.max(b - unit_change, Math.min(b + unit_change, val));
+  const rx = (b) => clamp(rand(b), b);
+
+  const a1x = rx(base.a1x);
+  const a2x = rx(base.a2x);
+
+  const d = [
+    `M 100,-5`,
+    `C 5,-10 65,8 ${a1x},28`,
+    `C 58,60 61,72 ${a2x},72`,
+    `C 70,96 -45,100 -45,100`,
+    `L 152,100 Z`
+  ].join(' ');
+
+  const start = path.getAttribute('d');
+  animatePath(path, start, d, 600);
+}
+
+
+function animatePath(path, from, to, duration) {
+  // Parse all numeric values from both paths and interpolate
+  const nums = str => [...str.matchAll(/-?\d+\.?\d*/g)].map(m => parseFloat(m[0]));
+  const fromNums = nums(from);
+  const toNums   = nums(to);
+  const template = from.replace(/-?\d+\.?\d*/g, '{}');
+  const startTime = performance.now();
+
+  function step(now) {
+    const t = Math.min((now - startTime) / duration, 1);
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // ease-in-out
+    const interpolated = fromNums.map((v, i) => (v + (toNums[i] - v) * ease).toFixed(2));
+    let i = 0;
+    path.setAttribute('d', template.replace(/{}/g, () => interpolated[i++]));
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+
+
+</script>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ── Paste your Google Apps Script Web App URL here ──
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdt-qAnrAthqlp8lxrt3equai65fG9G3Wkxlvi0A_IEiQ2_3LCCZogbn81cw1PGD6RvA/exec';
+
+    const form       = document.getElementById('resaForm');
+    const submitBtn  = document.getElementById('resaSubmitBtn');
+    const spinner    = submitBtn.querySelector('.btn-resa-spinner');
+    const label      = submitBtn.querySelector('.btn-resa-label');
+    const successMsg = document.getElementById('resaSuccess');
+    const errorMsg   = document.getElementById('resaError');
+
+    function validate(data) {
+      const bad = [];
+      if (!data.prenom || data.prenom.trim().length < 2) bad.push('resa-prenom');
+      if (!data.nom    || data.nom.trim().length < 2)    bad.push('resa-nom');
+      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!data.email  || !emailRe.test(data.email.trim())) bad.push('resa-email');
+      if (!data.service) bad.push('resa-service');
+      bad.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('invalid');
+        el.addEventListener('input', () => el.classList.remove('invalid'), { once: true });
+      });
+      return bad.length === 0;
+    }
+
+    function setLoading(on) {
+      submitBtn.disabled  = on;
+      spinner.style.display = on ? 'inline-block' : 'none';
+      label.textContent   = on ? 'Envoi en cours…' : 'Confirmer le rendez-vous';
+    }
+
+    function resetForm() {
+      form.querySelectorAll('input, select').forEach(el => {
+        if (el.tagName === 'SELECT') el.selectedIndex = 0;
+        else el.value = '';
+        el.classList.remove('invalid');
+      });
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      successMsg.style.display = 'none';
+      errorMsg.style.display   = 'none';
+
+      const data = {
+        prenom:   document.getElementById('resa-prenom').value,
+        nom:      document.getElementById('resa-nom').value,
+        phone:    document.getElementById('resa-phone').value,
+        email:    document.getElementById('resa-email').value,
+        chien:    document.getElementById('resa-chien').value,
+        service:  document.getElementById('resa-service').value,
+        date:     document.getElementById('resa-date').value,
+        honeypot: document.getElementById('resa-website').value,
+      };
+
+      // Honeypot: silent pass for bots
+      if (data.honeypot) { resetForm(); successMsg.style.display = 'block'; return; }
+
+      if (!validate(data)) {
+        errorMsg.textContent = 'Veuillez remplir tous les champs obligatoires.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const payload = new URLSearchParams();
+        Object.entries(data).forEach(([k, v]) => payload.append(k, v));
+
+        const res  = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: payload });
+        const json = await res.json();
+
+        if (json.result === 'success') {
+          resetForm();
+          successMsg.style.display = 'block';
+          successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          setTimeout(() => { successMsg.style.display = 'none'; }, 9000);
+        } else {
+          console.error('Apps Script error:', json.error);
+          errorMsg.style.display = 'block';
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        errorMsg.textContent = 'Erreur: ' + err.message;
+        errorMsg.style.display = 'block';
+      } finally {
+        setLoading(false);
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
