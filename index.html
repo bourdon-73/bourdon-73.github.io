@@ -1,10 +1,489 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello World</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WILL // GODOT_DEV.EXE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --void:#050505;
+    --panel:#0a0c0a;
+    --term-green:#39ff14;
+    --term-green-dim:#0e4a0e;
+    --chrome-blue:#4d6fff;
+    --chrome-blue-hi:#a8b8ff;
+    --glitch-magenta:#ff2ee0;
+    --glitch-cyan:#00fff2;
+    --warn-yellow:#ffe600;
+    --paper:#c8d6c8;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--void);
+    color:var(--paper);
+    font-family:'Space Mono', monospace;
+    font-size:15px;
+    line-height:1.6;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* ── CRT SCANLINE OVERLAY ── */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:999;
+    pointer-events:none;
+    background:repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.25) 0px,
+      rgba(0,0,0,0.25) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode:overlay;
+    opacity:0.6;
+  }
+  body::after{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:998;
+    pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.55) 100%);
+  }
+
+  h1,h2,h3, .vt{ font-family:'VT323', monospace; letter-spacing:0.02em; }
+
+  a{ color:var(--term-green); }
+  a:hover{ color:var(--glitch-cyan); }
+
+  ::selection{ background:var(--term-green); color:#000; }
+
+  /* ── BLINK CURSOR ── */
+  .cursor{
+    display:inline-block;
+    width:0.55em; height:1em;
+    background:var(--term-green);
+    animation:blink 1s steps(1) infinite;
+    vertical-align:-0.15em;
+    margin-left:2px;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ── NAV ── */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:200;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0.8rem 2rem;
+    background:rgba(5,5,5,0.9);
+    border-bottom:2px solid var(--term-green-dim);
+    font-size:0.85rem;
+  }
+  .nav-brand{ color:var(--term-green); font-weight:700; }
+  .nav-links{ display:flex; gap:1.5rem; list-style:none; }
+  .nav-links a{ text-decoration:none; color:var(--paper); }
+  .nav-links a:hover{ color:var(--term-green); }
+  .nav-links span{ color:var(--chrome-blue); }
+
+  /* ── GLITCH TITLE ── */
+  .glitch{
+    position:relative;
+    color:var(--paper);
+    text-shadow:
+      0.04em 0 0 var(--glitch-magenta),
+      -0.04em 0 0 var(--glitch-cyan);
+    animation:glitchshift 4s infinite steps(1);
+  }
+  @keyframes glitchshift{
+    0%,88%,100%{ text-shadow:0.04em 0 0 var(--glitch-magenta), -0.04em 0 0 var(--glitch-cyan); }
+    89%{ text-shadow:-0.06em 0.02em 0 var(--glitch-magenta), 0.06em -0.02em 0 var(--glitch-cyan); }
+    91%{ text-shadow:0.08em 0 0 var(--glitch-magenta), -0.03em 0.02em 0 var(--glitch-cyan); }
+  }
+
+  /* ── HERO ── */
+  header{
+    min-height:100vh;
+    padding:6rem 2rem 4rem;
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:3rem;
+    align-items:center;
+    position:relative;
+    border-bottom:2px solid var(--term-green-dim);
+  }
+  .boot-log{
+    font-size:0.78rem;
+    color:var(--term-green-dim);
+    margin-bottom:1.2rem;
+  }
+  .boot-log div{ color:var(--term-green); opacity:0.7; }
+
+  .hero-title{
+    font-size:clamp(3rem, 8vw, 6rem);
+    line-height:0.95;
+    margin-bottom:1rem;
+  }
+  .hero-sub{
+    color:var(--term-green);
+    font-size:1.1rem;
+    margin-bottom:1.8rem;
+  }
+
+  .stack-block{
+    border:1px solid var(--term-green-dim);
+    background:rgba(57,255,20,0.03);
+    padding:1rem 1.2rem;
+    margin-bottom:1.5rem;
+  }
+  .stack-block .label{ color:var(--warn-yellow); font-size:0.8rem; letter-spacing:0.1em; margin-bottom:0.5rem; }
+  .stack-block ul{ list-style:none; }
+  .stack-block li::before{ content:'>> '; color:var(--chrome-blue); }
+
+  .quote-line{
+    border-left:3px solid var(--glitch-magenta);
+    padding-left:1rem;
+    margin:1.2rem 0;
+    color:var(--paper);
+    font-style:italic;
+    font-size:0.95rem;
+  }
+  .marquee-note{
+    color:var(--glitch-cyan);
+    font-size:0.85rem;
+    margin-bottom:1.5rem;
+  }
+
+  .two-col{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1rem;
+  }
+  .two-col .stack-block .label{ color:var(--chrome-blue-hi); }
+
+  /* ── HERO RIGHT: GLOBE + ASCII ── */
+  .hero-visual{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1rem;
+  }
+  .globe{ width:min(260px, 60vw); height:auto; filter:drop-shadow(0 0 8px rgba(57,255,20,0.5)); }
+  .globe-rotate{ transform-origin:100px 100px; animation:spin 14s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .ascii-caption{
+    font-family:'VT323', monospace;
+    color:var(--glitch-magenta);
+    font-size:1.1rem;
+    letter-spacing:0.05em;
+  }
+  .ascii-chain{
+    font-family:'Space Mono', monospace;
+    font-size:0.55rem;
+    line-height:1.05;
+    color:var(--chrome-blue-hi);
+    text-shadow:0 0 6px rgba(77,111,255,0.6);
+    white-space:pre;
+    overflow-x:auto;
+    max-width:100%;
+    border:1px solid var(--chrome-blue);
+    padding:1rem;
+    background:rgba(77,111,255,0.04);
+  }
+
+  /* ── CHAIN DIVIDER ── */
+  .chain-divider{
+    height:34px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='34'%3E%3Cellipse cx='16' cy='17' rx='12' ry='8' fill='none' stroke='%234d6fff' stroke-width='4'/%3E%3Cellipse cx='40' cy='17' rx='12' ry='8' fill='none' stroke='%23a8b8ff' stroke-width='4'/%3E%3C/svg%3E");
+    background-repeat:repeat-x;
+    background-position:center;
+    opacity:0.8;
+  }
+
+  /* ── SECTION SHARED ── */
+  section{ padding:5rem 2rem; }
+  .section-eyebrow{
+    color:var(--warn-yellow);
+    font-size:0.8rem;
+    letter-spacing:0.15em;
+    margin-bottom:0.5rem;
+  }
+  .section-title{
+    font-size:clamp(2rem,5vw,3rem);
+    margin-bottom:2rem;
+    color:var(--term-green);
+  }
+
+  /* ── DIR LISTING (signature element) ── */
+  .dir-listing{
+    max-width:900px;
+    margin:0 auto 3rem;
+    border:1px solid var(--term-green-dim);
+    background:rgba(0,0,0,0.5);
+    padding:1.5rem;
+    font-size:0.82rem;
+    overflow-x:auto;
+  }
+  .dir-listing .dir-head{ color:var(--paper); opacity:0.7; margin-bottom:0.6rem; }
+  .dir-row{ display:grid; grid-template-columns:140px 90px 1fr; gap:1rem; color:var(--term-green); white-space:nowrap; }
+  .dir-row span:last-child{ color:var(--chrome-blue-hi); }
+  .dir-foot{ margin-top:0.6rem; color:var(--paper); opacity:0.6; }
+
+  /* ── PROJECT GRID ── */
+  .project-grid{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1.5rem;
+  }
+  .project-card{
+    border:2px solid var(--term-green-dim);
+    background:var(--panel);
+    display:flex;
+    flex-direction:column;
+    transition:border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover{ border-color:var(--term-green); transform:translateY(-3px); }
+
+  .card-titlebar{
+    display:flex; align-items:center; gap:0.4rem;
+    padding:0.5rem 0.7rem;
+    background:var(--term-green-dim);
+    color:#000;
+    font-family:'VT323', monospace;
+    font-size:1.1rem;
+  }
+  .card-titlebar .dot{ width:9px; height:9px; background:#000; opacity:0.5; }
+
+  .gif-placeholder{
+    aspect-ratio:16/10;
+    background:
+      repeating-conic-gradient(#111 0% 25%, #191919 0% 50%) 50% / 16px 16px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--chrome-blue-hi);
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    border-bottom:1px dashed var(--chrome-blue);
+    text-align:center;
+    padding:1rem;
+  }
+
+  .card-body{ padding:1rem 1.1rem; display:flex; flex-direction:column; gap:0.7rem; flex:1; }
+  .card-desc{ font-size:0.82rem; color:var(--paper); opacity:0.85; }
+  .card-desc em{ color:var(--warn-yellow); opacity:0.8; font-size:0.72rem; display:block; margin-top:0.4rem; }
+  .card-link{
+    font-size:0.8rem;
+    text-decoration:none;
+    color:var(--term-green);
+    border-top:1px dashed var(--term-green-dim);
+    padding-top:0.6rem;
+    margin-top:auto;
+  }
+  .card-link:before{ content:'$ '; color:var(--chrome-blue-hi); }
+
+  /* ── FOOTER ── */
+  footer{
+    text-align:center;
+    padding:3rem 2rem;
+    border-top:2px solid var(--term-green-dim);
+    color:var(--term-green-dim);
+    font-size:0.8rem;
+  }
+  footer span{ color:var(--term-green); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:900px){
+    header{ grid-template-columns:1fr; }
+    .two-col{ grid-template-columns:1fr; }
+    .project-grid{ grid-template-columns:1fr 1fr; }
+    .nav-links{ display:none; }
+  }
+  @media (max-width:560px){
+    .project-grid{ grid-template-columns:1fr; }
+    .dir-row{ grid-template-columns:1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{ animation:none !important; transition:none !important; }
+  }
+</style>
 </head>
 <body>
-  <h1>Hello, World!</h1>
+
+<nav>
+  <div class="nav-brand vt">C:\WILL&gt;<span class="cursor"></span></div>
+  <ul class="nav-links">
+    <li><a href="#about">[ABOUT]</a></li>
+    <li><a href="#projects">[PROJECTS]</a></li>
+    <li><a href="#contact">[CONTACT]</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<header id="about">
+  <div class="hero-left">
+    <div class="boot-log vt">
+      <div>WILL.SYS ......................... LOADED</div>
+      <div>GDSCRIPT.DLL ...................... OK</div>
+      <div>STATUS ............................ ONLINE</div>
+    </div>
+
+    <h1 class="hero-title glitch">Sup <span class="vt">👋</span><br>I'm Will.</h1>
+    <div class="hero-sub">I mostly mess around in Godot.</div>
+
+    <div class="stack-block">
+      <div class="label">// TECH</div>
+      <ul>
+        <li>C++</li>
+        <li>C#</li>
+        <li>GDScript</li>
+      </ul>
+    </div>
+
+    <p class="quote-line">I like simple, symmetrical games.<br>Rocket League is the most elegant game ever made.</p>
+    <div class="marquee-note">♪ Slight obsession with procedural generation ♫</div>
+
+    <div class="two-col">
+      <div class="stack-block">
+        <div class="label">// NEED TO WORK ON</div>
+        <ul>
+          <li>Finishing projects</li>
+          <li>Working with others</li>
+        </ul>
+      </div>
+      <div class="stack-block">
+        <div class="label">// HOBBIES</div>
+        <ul>
+          <li>Gym</li>
+          <li>Guitar</li>
+          <li>Googgoogaga</li>
+          <li>Golden retriever</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <svg class="globe" viewBox="0 0 200 200">
+      <g class="globe-rotate" fill="none" stroke="#39ff14" stroke-width="1.2">
+        <circle cx="100" cy="100" r="90"/>
+        <ellipse cx="100" cy="100" rx="90" ry="30"/>
+        <ellipse cx="100" cy="100" rx="90" ry="60"/>
+        <ellipse cx="100" cy="100" rx="40" ry="90"/>
+        <ellipse cx="100" cy="100" rx="40" ry="90" transform="rotate(45 100 100)"/>
+        <ellipse cx="100" cy="100" rx="40" ry="90" transform="rotate(90 100 100)"/>
+        <ellipse cx="100" cy="100" rx="40" ry="90" transform="rotate(135 100 100)"/>
+      </g>
+    </svg>
+
+    <div class="ascii-caption vt">this is insane</div>
+    <pre class="ascii-chain">                               ...vvvv)))))).
+   /~~\               ,,,c(((((((((((((((((/
+  /~~c \.         .vv)))))))))))))))))))\
+      G_G__   ,,(((KKKK//////////////'
+    ,Z~__ '@,gW@@AKXX~MW,gmmmz==m_.
+   iP,dW@!,A@@@@@@@@@@@@@@@A` ,W@@A\c
+   ]b_.__zf !P~@@@@@*P~b.~+=m@@@*~ g@Ws.
+      ~`    ,2W2m. '\[ ['~~c'M7 _gW@@A`'s
+        v=XX)====Y-  [ [    \c/*@@@*~ g@@i
+       /v~           !.!.     '\c7+sg@@@@@s.
+      //              'c'c       '\c7*X7~~~~
+     ]/                 ~=Xm_       '~=(Gm_.:</pre>
+  </div>
+</header>
+
+<div class="chain-divider"></div>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="section-eyebrow">// browsing local disk</div>
+  <h2 class="section-title">~/projects</h2>
+
+  <div class="dir-listing">
+    <div class="dir-head"> Directory of C:\WILL\PROJECTS</div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>gpu_terrain_2d</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>gpu_terrain_3d</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>verlet_boids</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>proc_shaders</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>vehicle_physics_3d</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>tps_ai_controller</span></div>
+    <div class="dir-foot">        6 Dir(s)   scroll down to view</div>
+  </div>
+
+  <div class="project-grid">
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;gpu_terrain_2d</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">Procedural 2D terrain generated entirely on the GPU. Real-time, no CPU heightmap baking.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/gpu-terrain-2d</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;gpu_terrain_3d</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">Same idea, one dimension up. GPU-driven procedural 3D terrain generation.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/gpu-terrain-3d</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;verlet_boids</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">Verlet integration physics with flocking boids and bouncing balls, simulated on the GPU.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/verlet-boids</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;proc_shaders</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">Procedural shader work and procedural animation experiments.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/proc-shaders</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;vehicle_physics_3d</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">3D vehicle physics and handling, built from scratch.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/vehicle-physics-3d</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;tps_ai_controller</div>
+      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-body">
+        <div class="card-desc">Third-person controller with aiming and basic enemy AI.<em>// placeholder text — edit me</em></div>
+        <a class="card-link" href="#">github.com/yourname/tps-ai-controller</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="chain-divider"></div>
+
+<footer id="contact">
+  <div>EOF <span class="cursor"></span></div>
+  <div style="margin-top:0.6rem;">© 2026 Will &nbsp;·&nbsp; <span>built in the terminal, mostly</span></div>
+</footer>
+
 </body>
 </html>
