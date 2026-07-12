@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WILL // GODOT_DEV.EXE</title>
+<title>BOURDON.EXE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +23,73 @@
 
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+
+
+
+.hero-visual{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.globe{
+    width:340px;
+    height:340px;
+}
+
+.globe ellipse{
+    fill:none;
+    stroke:#39ff14;
+    stroke-width:1;
+    opacity:.55;
+}
+
+.globe-rotate{
+    transform-origin:center;
+    animation:spin 22s linear infinite;
+}
+
+.globe path{
+    opacity:.9;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+.gif-slideshow{
+  position:relative;
+  aspect-ratio:16/10;
+  width:100%;
+  overflow:hidden;
+  border-bottom:1px dashed var(--chrome-blue);
+}
+.gif-slideshow img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity 0.4s ease;
+}
+.gif-slideshow img.active{
+  opacity:1;
+}
+.gif-placeholder,
+.project-card > img{
+  aspect-ratio:16/10;
+  width:100%;
+  object-fit:cover;
+  display:block;
+  border-bottom:1px dashed var(--chrome-blue);
+}
 
   body{
     background:var(--void);
@@ -177,6 +244,22 @@
   }
   .globe{ width:min(260px, 60vw); height:auto; filter:drop-shadow(0 0 8px rgba(57,255,20,0.5)); }
   .globe-rotate{ transform-origin:100px 100px; animation:spin 14s linear infinite; }
+
+
+.globe-rotate{
+    transform-origin:center;
+    animation:spin 22s linear infinite;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
   .ascii-caption{
@@ -319,6 +402,10 @@
 </head>
 <body>
 
+
+
+
+
 <nav>
   <div class="nav-brand vt">C:\WILL&gt;<span class="cursor"></span></div>
   <ul class="nav-links">
@@ -337,7 +424,8 @@
       <div>STATUS ............................ ONLINE</div>
     </div>
 
-    <h1 class="hero-title glitch">Sup <span class="vt">👋</span><br>I'm Will.</h1>
+    <!-- <h1 class="hero-title glitch">Sup <span class="vt">🐝</span><br>I'm Will.</h1> -->
+    <h1 class="hero-title glitch">Sup I'm Will.</h1>
     <div class="hero-sub">I mostly mess around in Godot.</div>
 
     <div class="stack-block">
@@ -372,7 +460,7 @@
     </div>
   </div>
 
-  <div class="hero-visual">
+  <!-- <div class="hero-visual">
     <svg class="globe" viewBox="0 0 200 200">
       <g class="globe-rotate" fill="none" stroke="#39ff14" stroke-width="1.2">
         <circle cx="100" cy="100" r="90"/>
@@ -383,7 +471,81 @@
         <ellipse cx="100" cy="100" rx="40" ry="90" transform="rotate(90 100 100)"/>
         <ellipse cx="100" cy="100" rx="40" ry="90" transform="rotate(135 100 100)"/>
       </g>
+    
+    
+    </svg> -->
+
+
+  <div class="hero-visual">
+    <svg class="globe" viewBox="0 0 300 300">
+
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+    <g class="globe-rotate" filter="url(#glow)">
+
+      <!-- Sphere -->
+      <circle cx="150" cy="150" r="110"
+        fill="rgba(57,255,20,.04)"
+        stroke="#39ff14"
+        stroke-width="2"/>
+
+      <!-- Latitude -->
+      <ellipse cx="150" cy="150" rx="110" ry="28"/>
+      <ellipse cx="150" cy="150" rx="110" ry="55"/>
+      <ellipse cx="150" cy="150" rx="110" ry="82"/>
+
+      <!-- Longitude -->
+      <ellipse cx="150" cy="150" rx="42" ry="110"/>
+      <ellipse cx="150" cy="150" rx="42" ry="110"
+              transform="rotate(45 150 150)"/>
+      <ellipse cx="150" cy="150" rx="42" ry="110"
+              transform="rotate(90 150 150)"/>
+      <ellipse cx="150" cy="150" rx="42" ry="110"
+              transform="rotate(135 150 150)"/>
+
+      <!-- Continents -->
+      <!-- <path d="
+        M112 90
+        L90 110
+        L95 135
+        L110 145
+        L120 165
+        L142 160
+        L148 130
+        L136 105
+        Z"
+        fill="#39ff14"/>
+
+      <path d="
+        M178 100
+        L205 110
+        L214 140
+        L198 165
+        L175 160
+        L165 130
+        Z"
+        fill="#39ff14"/>
+
+      <path d="
+        M160 178
+        L176 190
+        L170 212
+        L155 205
+        Z"
+        fill="#39ff14"/> -->
+
+    </g>
+
     </svg>
+
 
     <div class="ascii-caption vt">this is insane</div>
     <pre class="ascii-chain">                               ...vvvv)))))).
@@ -411,11 +573,11 @@
   <div class="dir-listing">
     <div class="dir-head"> Directory of C:\WILL\PROJECTS</div>
     <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>gpu_terrain_2d</span></div>
-    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>gpu_terrain_3d</span></div>
-    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>verlet_boids</span></div>
-    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>proc_shaders</span></div>
-    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>vehicle_physics_3d</span></div>
-    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>tps_ai_controller</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>gpu_verlets+various</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>variousshit_github</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>untitled2d_shooter</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>itchio</span></div>
+    <div class="dir-row"><span>07/05/2026</span><span>&lt;DIR&gt;</span><span>pixelarts</span></div>
     <div class="dir-foot">        6 Dir(s)   scroll down to view</div>
   </div>
 
@@ -423,57 +585,94 @@
 
     <div class="project-card">
       <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;gpu_terrain_2d</div>
-      <div class="gif-placeholder">C:\Users\autom\OneDrive\Documents\bourdon_site\bourdon-73.github.io\media\marching_gif.gif</div>
+      <!-- <div class="gif-placeholder">media\marching_gif.gif</div>\ -->
+      <img src="media/marching_gif.gif" alt="Marching cubes demo">
       <div class="card-body">
-        <div class="card-desc">Procedural 2D terrain generated entirely on the GPU. Real-time, no CPU heightmap baking.<em>// placeholder text — edit me</em></div>
-        <a class="card-link" href="#">https://github.com/bourdon-73/GPUGIT_marching_squares_godot</a>
+        <div class="card-desc">Procedural 2D terrain generated entirely on the GPU. Real-time, no CPU heightmap baking.<em>// Learning GLSL IS NOT EASY!</em></div>
+        <a class="card-link"
+        href="https://github.com/bourdon-73/GPUGIT_marching_squares_godot"
+        target="_blank"
+        rel="noopener noreferrer">
+          GitHub Repository
+      </a>
       </div>
     </div>
 
     <div class="project-card">
-      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;gpu_terrain_3d</div>
-      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;gpu_verlets+various</div>
+      <!-- <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div> -->
+      <img src="media\verlet_gif.gif" alt="Marching cubes demo">
       <div class="card-body">
-        <div class="card-desc">Same idea, one dimension up. GPU-driven procedural 3D terrain generation.<em>// placeholder text — edit me</em></div>
-        <a class="card-link" href="#">github.com/yourname/gpu-terrain-3d</a>
+        <div class="card-desc">Verlet integration physics with flocking boids and bouncing balls, simulated on the GPU.<em>// Pretty proud of this one ngl. It works well.</em></div>
+        <!-- <a class="card-link" href="#">github.com/yourname/gpu-terrain-3d</a> -->
+          <a class="card-link"
+        href="https://github.com/bourdon-73/verlets_gpu_-various"
+        target="_blank"
+        rel="noopener noreferrer">
+          GitHub Repository
+      </a>
       </div>
     </div>
 
     <div class="project-card">
-      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;verlet_boids</div>
-      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;variousshit_github</div>
+      <!-- <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div> -->
+      <img src="media\various.gif" alt="Marching cubes demo">
       <div class="card-body">
-        <div class="card-desc">Verlet integration physics with flocking boids and bouncing balls, simulated on the GPU.<em>// placeholder text — edit me</em></div>
-        <a class="card-link" href="#">github.com/yourname/verlet-boids</a>
+        <div class="card-desc">Various older github projects. <em>// Game Jams, prototypes, experiments... BE WARNED? </em></div>
+        <!-- <a class="card-link" href="#">github.com/yourname/verlet-boids</a> -->
+        <a class="card-link"
+        href="https://github.com/bourdon-73"
+        target="_blank"
+        rel="noopener noreferrer">
+          GitHub Repository
+      </a>
       </div>
     </div>
 
     <div class="project-card">
-      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;proc_shaders</div>
-      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;untitled2d_shooter</div>
+      <!-- <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div> -->
+      <img src="media\inkgif.gif" alt="Marching cubes demo">
       <div class="card-body">
-        <div class="card-desc">Procedural shader work and procedural animation experiments.<em>// placeholder text — edit me</em></div>
-        <a class="card-link" href="#">github.com/yourname/proc-shaders</a>
+        <div class="card-desc">Procedural animation experiments.<em>// This one means alot.</em></div>
+        <!-- <a class="card-link" href="#">github.com/yourname/proc-shaders</a> -->
       </div>
     </div>
 
     <div class="project-card">
-      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;vehicle_physics_3d</div>
-      <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;itchio</div>
+
+      <div class="gif-slideshow" data-durations="19560,16000,12000,8000">
+        
+        <img src="media/pindef (1).gif" alt="Marching cubes demo" class="active">
+        <img src="media/batman.gif" alt="Marching cubes demo">
+        <img src="media/gnomish.gif" alt="Marching cubes demo">
+        <img src="media/cheese.gif" alt="Marching cubes demo">
+        
+        
+      </div>
+
       <div class="card-body">
-        <div class="card-desc">3D vehicle physics and handling, built from scratch.<em>// placeholder text — edit me</em></div>
-        <a class="card-link" href="#">github.com/yourname/vehicle-physics-3d</a>
+        <div class="card-desc">Link to my Itch.io page.<em>// My itch.io is terrible.</em></div>
+        <a class="card-link"
+          href="https://billbucket.itch.io/"
+          target="_blank"
+          rel="noopener noreferrer">
+          Itch.io
+        </a>
       </div>
     </div>
 
-    <div class="project-card">
-      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;tps_ai_controller</div>
+
+    <!-- <div class="project-card">
+      <div class="card-titlebar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp;pixelarts</div>
       <div class="gif-placeholder">[ GIF PLACEHOLDER — drop clip here ]</div>
       <div class="card-body">
-        <div class="card-desc">Third-person controller with aiming and basic enemy AI.<em>// placeholder text — edit me</em></div>
+        <div class="card-desc">Compilation of older works.<em>// Not bad huh?</em></div>
         <a class="card-link" href="#">github.com/yourname/tps-ai-controller</a>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </section>
@@ -482,8 +681,36 @@
 
 <footer id="contact">
   <div>EOF <span class="cursor"></span></div>
-  <div style="margin-top:0.6rem;">© 2026 Will &nbsp;·&nbsp; <span>built in the terminal, mostly</span></div>
+  <div style="margin-top:0.6rem;">© bzt &nbsp;·&nbsp; <span>No bees no honey.</span></div>
+  
+  <!-- <div style="margin-top:0.6rem;">© bzt &nbsp;·&nbsp; <span>A true hedonist needs to learn to balance and not over indulge because otherwise the end result is not maximized joy</span></div> -->
+  <!-- <div style="margin-top:0.6rem;">© 2026 bourdon &nbsp;·&nbsp; <span>No bees no honey</span></div> -->
 </footer>
+
+
+<script>
+  document.querySelectorAll('.gif-slideshow').forEach(slideshow => {
+    const imgs = slideshow.querySelectorAll('img');
+    const durations = slideshow.dataset.durations
+      .split(',')
+      .map(n => parseInt(n.trim(), 10));
+
+    let i = 0;
+
+    function next(){
+      imgs[i].classList.remove('active');
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add('active');
+      // restart the gif so it plays from frame 1 each time it comes back around
+      const src = imgs[i].src;
+      imgs[i].src = '';
+      imgs[i].src = src;
+      setTimeout(next, durations[i]);
+    }
+
+    setTimeout(next, durations[0]);
+  });
+</script>
 
 </body>
 </html>
